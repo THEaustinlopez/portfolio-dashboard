@@ -1,4 +1,46 @@
-# [NextJS Material Dashboard 2 PRO](http://demos.creative-tim.com/nextjs-material-dashboard-pro/dashboards/analytics?ref=readme-nmd2p) [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social&logo=twitter)](https://twitter.com/intent/tweet?url=https://www.creative-tim.com/product/nextjs-material-dashboard-pro&text=Check%20Material%20Dashboard%202%20Pro%NextJS%20made%20by%20@CreativeTim%20#webdesign%20#dashboard%20#materialdesign%20#nextjs%20https://www.creative-tim.com/product/nextjs-material-dashboard-pro)
+# [Welcome to the Portfolio of Austin Lopez]
+
+Thank you for visiting my portfolio github! Glad you are here 😃
+
+My plans with this project are ambitious. The general summary for now is that this project will evolve into an admin style dashboard that will host many smaller projects or applets.
+
+Some projects that are planned are:
+
+- Cryptocurreny
+    - Coin Tracker
+    - Exchange
+- Fantasy esports
+- Fantasy European Football
+- Real Estate "State of the Market" dashboard based on your locale
+- Pokemon apps
+    - Pokedex
+    - Battle System (javascript game)
+- Star Wars 5e Character Builder
+- Possible some AI integrations as well
+
+Keep checking back to see the progress on these things.
+
+#### Special thanks
+
+I want to give a special thanks to Creative Time for making amazing templates to help me speed up my work. As well as I want to thank all of the awesome developers. 
+for these great resources.
+
+- [MUI](https://mui.com/) - The React UI library for faster and easier web development.
+- [React Table](https://react-table.tanstack.com/) - Lightweight and extensible data tables for React.
+- [React Flatpickr](https://github.com/haoxins/react-flatpickr) - Useful library used to select date.
+- [React ChartJS 2](http://reactchartjs.github.io/react-chartjs-2/#/) - Simple yet flexible React charting for designers & developers.
+- [Full Calendar](https://fullcalendar.io/) - Full-sized drag & drop event calendar.
+- [Dropzone](https://www.dropzonejs.com/) - An open source library that provides drag & drop file uploads with image previews.
+- [React Kanban](https://github.com/asseinfo/react-kanban) - Kanban/Trello board lib for React.
+- [React Images Viewer](https://guonanci.github.io/react-images-viewer/) - A simple, responsive images viewer component for ReactJS.
+- [React Quill](https://github.com/zenoamaro/react-quill) - A free, open source WYSIWYG editor built for the modern web.
+- [Formik](https://formik.org/) - Formik is the world's most popular open source form library for React and React Native.
+- [ChromaJS](https://gka.github.io/chroma.js/) - A small-ish zero-dependency JavaScript library for all kinds of color conversions and color scales.
+- [UUID](https://github.com/uuidjs/uuid) - JavaScript library for generating random id numbers.
+- [HTML React Parser](https://github.com/remarkablemark/html-react-parser) - A utility for converting HTML strings into React components.
+
+
+<!-- # [NextJS Material Dashboard 2 PRO](http://demos.creative-tim.com/nextjs-material-dashboard-pro/dashboards/analytics?ref=readme-nmd2p) [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social&logo=twitter)](https://twitter.com/intent/tweet?url=https://www.creative-tim.com/product/nextjs-material-dashboard-pro&text=Check%20Material%20Dashboard%202%20Pro%NextJS%20made%20by%20@CreativeTim%20#webdesign%20#dashboard%20#materialdesign%20#nextjs%20https://www.creative-tim.com/product/nextjs-material-dashboard-pro)
 
 ![version](https://img.shields.io/badge/version-2.1.0-blue.svg) [![GitHub issues open](https://img.shields.io/github/issues/creativetimofficial/ct-nextjs-material-dashboard-pro.svg)](https://github.com/creativetimofficial/ct-nextjs-material-dashboard-pro/issues?q=is%3Aopen+is%3Aissue) [![GitHub issues closed](https://img.shields.io/github/issues-closed-raw/creativetimofficial/ct-nextjs-material-dashboard-pro.svg)](https://github.com/creativetimofficial/ct-nextjs-material-dashboard-pro/issues?q=is%3Aissue+is%3Aclosed)
 
@@ -255,4 +297,4 @@ Dribbble: <https://dribbble.com/creativetim>
 
 Google+: <https://plus.google.com/+CreativetimPage>
 
-Instagram: <https://instagram.com/creativetimofficial>
+Instagram: <https://instagram.com/creativetimofficial> -->
