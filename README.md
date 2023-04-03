@@ -22,8 +22,7 @@ Keep checking back to see the progress on these things.
 
 #### Special thanks
 
-I want to give a special thanks to Creative Time for making amazing templates to help me speed up my work. As well as I want to thank all of the awesome developers. 
-for these great resources.
+I want to give a special thanks to Creative Time for making amazing templates to help me speed up my work. As well as I want to thank all of the awesome developers for these great resources.
 
 - [MUI](https://mui.com/) - The React UI library for faster and easier web development.
 - [React Table](https://react-table.tanstack.com/) - Lightweight and extensible data tables for React.

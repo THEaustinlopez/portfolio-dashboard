@@ -67,6 +67,10 @@ import brandDark from "/assets/images/ns-dark.png";
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createCache({ key: "css", prepend: true });
 
+// React Query
+import { QueryClient, QueryClientProvider } from "react-query";
+const queryClient = new QueryClient();
+
 function Main({ Component, pageProps }) {
   const [controller, dispatch] = useMaterialUIController();
   const {
@@ -208,9 +212,11 @@ function MyApp({
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <link rel="shortcut icon" href={favicon.src} />
           <link rel="apple-touch-icon" sizes="76x76" href={appleIcon.src} />
-          <title>Next Material Dashboard 2 PRO</title>
+          <title>Austin Lopez: Full Stack Engineer</title>
         </Head>
-        <Main Component={Component} pageProps={pageProps} />
+        <QueryClientProvider client={queryClient}>
+          <Main Component={Component} pageProps={pageProps} />
+        </QueryClientProvider>
       </CacheProvider>
     </MaterialUIControllerProvider>
   );

@@ -14,6 +14,12 @@ Coded by www.creative-tim.com
 */
 
 import { useState } from "react";
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQuery
+} from "react-query";
+import axios from "axios";
 
 // @mui material components
 import Grid from "@mui/material/Grid";
@@ -30,7 +36,7 @@ import MDButton from "/components/MDButton";
 import DashboardLayout from "/examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "/examples/Navbars/DashboardNavbar";
 import Footer from "/examples/Footer";
-import ComplexProjectCard from "/examples/Cards/ProjectCards/ComplexProjectCard";
+import PokemonCard from "/examples/Cards/ProjectCards/PokemonCard";
 
 // Project page components
 import Header from "/pagesComponents/pages/profile/components/Header";
@@ -49,7 +55,7 @@ import logoInvision from "/assets/images/small-logos/logo-invision.svg";
 import logoAtlassian from "/assets/images/small-logos/logo-atlassian.svg";
 
 function AllProjects() {
-  // ComplexProjectCard dropdown menu state
+  // PokemonCard dropdown menu state
   const [slackBotMenu, setSlackBotMenu] = useState(null);
   const [premiumSupportMenu, setPremiumSupportMenu] = useState(null);
   const [designToolsMenu, setDesignToolsMenu] = useState(null);
@@ -72,7 +78,7 @@ function AllProjects() {
     setDeveloperFirstMenu(event.currentTarget);
   const closeDeveloperFirstMenu = () => setDeveloperFirstMenu(null);
 
-  // Dropdown menu template for the ComplexProjectCard
+  // Dropdown menu template for the PokemonCard
   const renderMenu = (state, close) => (
     <Menu
       anchorEl={state}
@@ -88,6 +94,21 @@ function AllProjects() {
     </Menu>
   );
 
+  const fetchPokemon = async (pokemon) => {
+    const res = await axios.get('https://pokeapi.co/api/v2/pokemon/' + pokemon);
+    console.log(res);
+      return {
+          name: res.data.name,
+          types: res.data.types,
+          sprite: res.data.sprites.front_default,
+      };
+  };
+  // Temp for now
+  const pokemonName = 'bulbasaur';
+  const { isLoading, error, data: pokemon } = useQuery(`fetch-${pokemonName}`, () =>
+    fetchPokemon(pokemonName)
+  );
+
   return (
     <DashboardLayout>
       <MDBox width="calc(100% - 48px)" position="absolute" top="1.75rem">
@@ -99,14 +120,13 @@ function AllProjects() {
           <Grid item xs={12} md={7}>
             <MDBox mb={1}>
               <MDTypography variant="h5">
-                Some of Our Awesome Projects
+                Pokedex Pro
               </MDTypography>
             </MDBox>
             <MDBox mb={2}>
               <MDTypography variant="body2" color="text">
-                This is the paragraph where you can write more details about
-                your projects. Keep you user engaged by providing meaningful
-                information.
+                Pokémon are the creatures that inhabit the world of the Pokémon games. They can be caught using Pokéballs and trained by battling with other Pokémon. 
+                Each Pokémon belongs to a specific species but may take on a variant which makes it differ from other Pokémon of the same species, such as base stats, available abilities and typings.
               </MDTypography>
             </MDBox>
           </Grid>
@@ -120,7 +140,7 @@ function AllProjects() {
           <Grid container spacing={3}>
             <Grid item xs={12} md={6} lg={4}>
               <MDBox mb={1.5} mt={1.5}>
-                <ComplexProjectCard
+                <PokemonCard
                   image={logoSlack}
                   title="slack bot"
                   description="If everything I did failed - which it doesn't, I think that it actually succeeds."
@@ -135,7 +155,9 @@ function AllProjects() {
             </Grid>
             <Grid item xs={12} md={6} lg={4}>
               <MDBox mb={1.5} mt={1.5}>
-                <ComplexProjectCard
+                {!isLoading ?
+                <PokemonCard
+                  {...pokemon}
                   image={logoSpotify}
                   title="premium support"
                   description="Pink is obviously a better color. Everyone’s born confident, and everything’s taken away from you."
@@ -146,14 +168,17 @@ function AllProjects() {
                     menu: renderMenu(
                       premiumSupportMenu,
                       closePremiumSupportMenu,
-                    ),
+                    )
                   }}
                 />
+                :
+                <></>
+                }
               </MDBox>
             </Grid>
             <Grid item xs={12} md={6} lg={4}>
               <MDBox mb={1.5} mt={1.5}>
-                <ComplexProjectCard
+                <PokemonCard
                   image={logoXD}
                   title="design tools"
                   description="Constantly growing. We’re constantly making mistakes from which we learn and improve."
@@ -168,7 +193,7 @@ function AllProjects() {
             </Grid>
             <Grid item xs={12} md={6} lg={4}>
               <MDBox mb={1.5} mt={1.5}>
-                <ComplexProjectCard
+                <PokemonCard
                   image={logoAsana}
                   title="looking great"
                   description="You have the opportunity to play this game of life you need to appreciate every moment."
@@ -183,7 +208,7 @@ function AllProjects() {
             </Grid>
             <Grid item xs={12} md={6} lg={4}>
               <MDBox mb={1.5} mt={1.5}>
-                <ComplexProjectCard
+                <PokemonCard
                   image={logoInvision}
                   title="developer first"
                   description="For standing out. But the time is now to be okay to be the greatest you."
@@ -201,7 +226,7 @@ function AllProjects() {
             </Grid>
             <Grid item xs={12} md={6} lg={4}>
               <MDBox mb={1.5} mt={1.5}>
-                <ComplexProjectCard
+                <PokemonCard
                   image={logoAtlassian}
                   title="Product Development"
                   description="We strive to embrace and drive change in our industry. We are happy to work at such a project."

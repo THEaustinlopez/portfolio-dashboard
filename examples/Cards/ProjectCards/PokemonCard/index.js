@@ -1,18 +1,3 @@
-/**
-=========================================================
-* NextJS Material Dashboard 2 PRO - v2.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/nextjs-material-dashboard-pro
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 // prop-types is library for typechecking of props
 import PropTypes from "prop-types";
 
@@ -26,8 +11,8 @@ import MDBox from "/components/MDBox";
 import MDTypography from "/components/MDTypography";
 import MDAvatar from "/components/MDAvatar";
 
-// Custom styles for ComplexProjectCard
-function ComplexProjectCard({
+// Custom styles for PokemonCard
+function PokemonCard({
   color,
   image,
   title,
@@ -35,6 +20,7 @@ function ComplexProjectCard({
   description,
   members,
   dropdown,
+  pokemon
 }) {
   const renderMembers = members.map((member, key) => {
     const memberKey = `member-${key}`;
@@ -67,7 +53,7 @@ function ComplexProjectCard({
       <MDBox p={2}>
         <MDBox display="flex" alignItems="center">
           <MDAvatar
-            src={image.src || image}
+            src={pokemon ? pokemon.sprite : ''}
             alt={title}
             size="xl"
             variant="rounded"
@@ -84,7 +70,7 @@ function ComplexProjectCard({
               textTransform="capitalize"
               fontWeight="medium"
             >
-              {title}
+              {pokemon ? pokemon.name : ''}
             </MDTypography>
             {members.length > -1 ? (
               <MDBox display="flex">{renderMembers}</MDBox>
@@ -156,16 +142,16 @@ function ComplexProjectCard({
   );
 }
 
-// Setting default values for the props of ComplexProjectCard
-ComplexProjectCard.defaultProps = {
+// Setting default values for the props of PokemonCard
+PokemonCard.defaultProps = {
   color: "dark",
   dateTime: "",
   members: [],
   dropdown: false,
 };
 
-// Typechecking props for the ComplexProjectCard
-ComplexProjectCard.propTypes = {
+// Typechecking props for the PokemonCard
+PokemonCard.propTypes = {
   color: PropTypes.oneOf([
     "primary",
     "secondary",
@@ -192,4 +178,4 @@ ComplexProjectCard.propTypes = {
   ]),
 };
 
-export default ComplexProjectCard;
+export default PokemonCard;

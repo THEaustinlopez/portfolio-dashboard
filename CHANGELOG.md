@@ -97,7 +97,7 @@
   - PricingCards
     - DefaultPricingCard
   - ProjectCards
-    - ComplexProjectCard
+    - PokemonCard
     - DefaultProjectCard
   - StatisticsCards
     - ComplexStatisticsCard
