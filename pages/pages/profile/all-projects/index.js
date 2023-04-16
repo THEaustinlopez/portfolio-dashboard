@@ -14,12 +14,12 @@ Coded by www.creative-tim.com
 */
 
 import { useState } from "react";
+import axios from "axios";
+
 import {
   QueryClient,
-  QueryClientProvider,
-  useQuery
-} from "react-query";
-import axios from "axios";
+  useQuery,
+} from "@tanstack/react-query";
 
 // @mui material components
 import Grid from "@mui/material/Grid";
@@ -94,20 +94,59 @@ function AllProjects() {
     </Menu>
   );
 
+  // Create a React Query client
+  const queryClient = new QueryClient()
+
   const fetchPokemon = async (pokemon) => {
-    const res = await axios.get('https://pokeapi.co/api/v2/pokemon/' + pokemon);
-    console.log(res);
-      return {
-          name: res.data.name,
-          types: res.data.types,
-          sprite: res.data.sprites.front_default,
+    const pokemonData = await axios.get('https://pokeapi.co/api/v2/pokemon/' + pokemon);
+    console.log(pokemonData);
+    if (pokemonData.status !== 200 || !pokemonData.data) {
+      throw new Error('Failed to fetch pokemon data');
+      // TODO: Handle error with React Query and Load an error card in place of a normal card so other cards can still be displayed
+    }
+    const pokemonId = pokemonData.data.id;
+    const pokemonName = pokemonData.data.name;
+    const pokemonTypes = pokemonData.data.types;
+    const spriteUrl = pokemonData.data.sprites.other?.["official-artwork"].front_default || pokemonData.data.sprites.front_default;
+    const speciesData = await axios.get('https://pokeapi.co/api/v2/pokemon-species/' + pokemonId);
+    if (pokemonData.status !== 200 || !pokemonData.data) {
+      throw new Error('Failed to fetch species data');
+    }
+    console.log(speciesData);
+    const pokemonDescription = await getRandomFlavorText(speciesData.data.flavor_text_entries);
+    console.log(pokemonDescription);
+    return {
+          id: pokemonId,
+          name: pokemonName,
+          types: pokemonTypes,
+          sprite: spriteUrl,
+          description: pokemonDescription,
       };
   };
   // Temp for now
   const pokemonName = 'bulbasaur';
-  const { isLoading, error, data: pokemon } = useQuery(`fetch-${pokemonName}`, () =>
-    fetchPokemon(pokemonName)
-  );
+    const {
+        isLoading,
+        isSuccess,
+        error,
+        status,
+        data: pokemon,
+    } = useQuery(['fetch', pokemonName], () => fetchPokemon(pokemonName));
+
+    const getRandomFlavorText = (flavorTexts) => {
+      const englishFlavorTexts = flavorTexts
+        .filter((text) => text.language.name === 'en')
+        .map((text) => text.flavor_text);
+    
+      const uniqueEnglishFlavorTexts = [...new Set(englishFlavorTexts)];
+    
+      const randomIndex = Math.floor(
+        Math.random() * uniqueEnglishFlavorTexts.length
+      );
+    
+      return uniqueEnglishFlavorTexts[randomIndex];
+    };
+    
 
   return (
     <DashboardLayout>
@@ -138,110 +177,31 @@ function AllProjects() {
         </Grid>
         <MDBox mt={5}>
           <Grid container spacing={3}>
+            {isLoading ?
+            <p>Loading</p>
+            :
+            error || !isSuccess ?
+            <p>error</p>
+            :
+            pokemon && (
             <Grid item xs={12} md={6} lg={4}>
               <MDBox mb={1.5} mt={1.5}>
                 <PokemonCard
-                  image={logoSlack}
-                  title="slack bot"
-                  description="If everything I did failed - which it doesn't, I think that it actually succeeds."
-                  dateTime="02.03.22"
-                  members={[team1, team2, team3, team4, team5]}
-                  dropdown={{
-                    action: openSlackBotMenu,
-                    menu: renderMenu(slackBotMenu, closeSlackBotMenu),
-                  }}
+                {...pokemon}
+                  // image={logoSlack}
+                  // title="slack bot"
+                  // description="If everything I did failed - which it doesn't, I think that it actually succeeds."
+                  // dateTime="02.03.22"
+                  // members={[team1, team2, team3, team4, team5]}
+                  // dropdown={{
+                  //   action: openSlackBotMenu,
+                  //   menu: renderMenu(slackBotMenu, closeSlackBotMenu),
+                  // }}
                 />
               </MDBox>
             </Grid>
-            <Grid item xs={12} md={6} lg={4}>
-              <MDBox mb={1.5} mt={1.5}>
-                {!isLoading ?
-                <PokemonCard
-                  {...pokemon}
-                  image={logoSpotify}
-                  title="premium support"
-                  description="Pink is obviously a better color. Everyone’s born confident, and everything’s taken away from you."
-                  dateTime="22.11.21"
-                  members={[team1, team2, team3]}
-                  dropdown={{
-                    action: openPremiumSupportMenu,
-                    menu: renderMenu(
-                      premiumSupportMenu,
-                      closePremiumSupportMenu,
-                    )
-                  }}
-                />
-                :
-                <></>
-                }
-              </MDBox>
-            </Grid>
-            <Grid item xs={12} md={6} lg={4}>
-              <MDBox mb={1.5} mt={1.5}>
-                <PokemonCard
-                  image={logoXD}
-                  title="design tools"
-                  description="Constantly growing. We’re constantly making mistakes from which we learn and improve."
-                  dateTime="06.03.20"
-                  members={[team1, team2, team3, team4]}
-                  dropdown={{
-                    action: openDesignToolsMenu,
-                    menu: renderMenu(designToolsMenu, closeDesignToolsMenu),
-                  }}
-                />
-              </MDBox>
-            </Grid>
-            <Grid item xs={12} md={6} lg={4}>
-              <MDBox mb={1.5} mt={1.5}>
-                <PokemonCard
-                  image={logoAsana}
-                  title="looking great"
-                  description="You have the opportunity to play this game of life you need to appreciate every moment."
-                  dateTime="14.03.24"
-                  members={[team1, team2, team3, team4, team5, team3]}
-                  dropdown={{
-                    action: openLookingGreatMenu,
-                    menu: renderMenu(lookingGreatMenu, closeLookingGreatMenu),
-                  }}
-                />
-              </MDBox>
-            </Grid>
-            <Grid item xs={12} md={6} lg={4}>
-              <MDBox mb={1.5} mt={1.5}>
-                <PokemonCard
-                  image={logoInvision}
-                  title="developer first"
-                  description="For standing out. But the time is now to be okay to be the greatest you."
-                  dateTime="16.01.22"
-                  members={[team1, team2, team3, team4]}
-                  dropdown={{
-                    action: openDeveloperFirstMenu,
-                    menu: renderMenu(
-                      developerFirstMenu,
-                      closeDeveloperFirstMenu,
-                    ),
-                  }}
-                />
-              </MDBox>
-            </Grid>
-            <Grid item xs={12} md={6} lg={4}>
-              <MDBox mb={1.5} mt={1.5}>
-                <PokemonCard
-                  image={logoAtlassian}
-                  title="Product Development"
-                  description="We strive to embrace and drive change in our industry. We are happy to work at such a project."
-                  dateTime="16.01.22"
-                  members={[team1, team2, team3, team4]}
-                  dropdown={{
-                    action: openDeveloperFirstMenu,
-                    menu: renderMenu(
-                      developerFirstMenu,
-                      closeDeveloperFirstMenu,
-                    ),
-                  }}
-                />
-              </MDBox>
-            </Grid>
+            )
+            }
           </Grid>
         </MDBox>
       </MDBox>

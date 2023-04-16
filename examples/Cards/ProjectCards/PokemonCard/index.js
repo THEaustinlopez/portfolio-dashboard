@@ -20,7 +20,7 @@ function PokemonCard({
   description,
   members,
   dropdown,
-  pokemon
+  ...pokemon
 }) {
   const renderMembers = members.map((member, key) => {
     const memberKey = `member-${key}`;
@@ -48,12 +48,13 @@ function PokemonCard({
     );
   });
 
+  if (pokemon) {
   return (
     <Card>
       <MDBox p={2}>
         <MDBox display="flex" alignItems="center">
           <MDAvatar
-            src={pokemon ? pokemon.sprite : ''}
+            src={pokemon?.sprite}
             alt={title}
             size="xl"
             variant="rounded"
@@ -70,7 +71,7 @@ function PokemonCard({
               textTransform="capitalize"
               fontWeight="medium"
             >
-              {pokemon ? pokemon.name : ''}
+              {pokemon?.name.toUpperCase()}
             </MDTypography>
             {members.length > -1 ? (
               <MDBox display="flex">{renderMembers}</MDBox>
@@ -108,38 +109,40 @@ function PokemonCard({
           justifyContent="space-between"
           alignItems="center"
         >
-          {members.length > -1 ? (
             <MDBox display="flex" flexDirection="column" lineHeight={0}>
               <MDTypography variant="button" fontWeight="medium">
-                {members.length}
+                {pokemon.id}
               </MDTypography>
               <MDTypography
                 variant="button"
                 fontWeight="regular"
                 color="secondary"
               >
-                Participants
+                No.
               </MDTypography>
             </MDBox>
-          ) : null}
-          {dateTime ? (
             <MDBox display="flex" flexDirection="column" lineHeight={0}>
-              <MDTypography variant="button" fontWeight="medium">
-                {dateTime}
-              </MDTypography>
+              {pokemon.types && pokemon.types.map((type, key) => {
+                return (
+                  <MDTypography key={key} variant="button" fontWeight="medium">
+                    {type.type.name.charAt(0).toUpperCase() + type.type.name.slice(1)}
+                  </MDTypography>
+                )
+                })
+              }
               <MDTypography
                 variant="button"
                 fontWeight="regular"
                 color="secondary"
               >
-                Due date
+                Type
               </MDTypography>
             </MDBox>
-          ) : null}
         </MDBox>
       </MDBox>
     </Card>
   );
+  }
 }
 
 // Setting default values for the props of PokemonCard
@@ -162,20 +165,21 @@ PokemonCard.propTypes = {
     "dark",
     "light",
   ]),
-  image: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
-  title: PropTypes.string.isRequired,
-  dateTime: PropTypes.string,
-  description: PropTypes.node.isRequired,
-  members: PropTypes.arrayOf(
-    PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  ),
-  dropdown: PropTypes.oneOfType([
-    PropTypes.bool,
-    PropTypes.shape({
-      action: PropTypes.func,
-      menu: PropTypes.node,
-    }),
-  ]),
+  // image: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
+  // title: PropTypes.string.isRequired,
+  // dateTime: PropTypes.string,
+  // description: PropTypes.node.isRequired,
+  // members: PropTypes.arrayOf(
+  //   PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  // ),
+  // dropdown: PropTypes.oneOfType([
+  //   PropTypes.bool,
+  //   PropTypes.shape({
+  //     action: PropTypes.func,
+  //     menu: PropTypes.node,
+  //   }),
+  // ]),
+  // pokemon: PropTypes.object.isRequired
 };
 
 export default PokemonCard;

@@ -18,6 +18,17 @@ import { useState, useEffect, useMemo } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 
+// React Query
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQuery,
+} from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+
+// Create a React Query client
+const queryClient = new QueryClient()
+
 // @emotion
 import createCache from "@emotion/cache";
 
@@ -66,10 +77,6 @@ import brandDark from "/assets/images/ns-dark.png";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createCache({ key: "css", prepend: true });
-
-// React Query
-import { QueryClient, QueryClientProvider } from "react-query";
-const queryClient = new QueryClient();
 
 function Main({ Component, pageProps }) {
   const [controller, dispatch] = useMaterialUIController();
@@ -216,6 +223,7 @@ function MyApp({
         </Head>
         <QueryClientProvider client={queryClient}>
           <Main Component={Component} pageProps={pageProps} />
+          <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
       </CacheProvider>
     </MaterialUIControllerProvider>
